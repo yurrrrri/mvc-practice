@@ -1,5 +1,6 @@
-package com.example.practice;
+package com.example.practice.password;
 
+import com.example.practice.password.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
