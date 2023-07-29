@@ -11,6 +11,16 @@ public class GradeCalculator {
     }
 
     public double calculateGrade() {
-        return 4.5;
+        double multipliedCreditAndCourseGrade = 0;
+
+        for(Course course : courses) {
+            multipliedCreditAndCourseGrade += course.getCredit() * course.getGradeToNumber();
+        }
+
+        int totalCompletedCredit = courses.stream()
+                .mapToInt(Course::getCredit).sum();
+
+        return multipliedCreditAndCourseGrade / totalCompletedCredit;
     }
+
 }
