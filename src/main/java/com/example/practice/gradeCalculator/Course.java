@@ -27,7 +27,7 @@ public class Course {
             case "B+" -> 3.5;
             case "B" -> 3.0;
             case "C+" -> 2.5;
-            case "C" -> 2.0;
+            default -> 2.0;
         };
     }
 
