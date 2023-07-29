@@ -1,9 +1,10 @@
 package com.example.practice.order;
 
-public class Cooking {
+public class Chef {
 
     public Cook cook(MenuItem menuItem) {
-        return new Cook("돈까스", 5000);
+        Cook cook = new Cook(menuItem);
+        return cook;
     }
 
 }
