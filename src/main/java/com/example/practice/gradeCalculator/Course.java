@@ -1,8 +1,5 @@
 package com.example.practice.gradeCalculator;
 
-import lombok.Getter;
-
-@Getter
 public class Course {
 
     private final String subject;
@@ -13,6 +10,14 @@ public class Course {
         this.subject = subject;
         this.credit = credit;
         this.grade = grade;
+    }
+
+    public int getCredit() {
+        return credit;
+    }
+
+    public double multiplyCreditAndCourseGrade() {
+        return credit * getGradeToNumber();
     }
 
     public double getGradeToNumber() {
