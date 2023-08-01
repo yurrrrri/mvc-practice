@@ -8,24 +8,17 @@ import java.sql.SQLException;
 public class UserDao {
 
     public void create(User user) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        try {
-            con = ConnectionManager.getConnection();
-            String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-            pstmt = con.prepareStatement(sql);
+        String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
+        jdbcTemplate.executeUpdate(user, sql, pstmt -> {
             pstmt.setString(1, user.getUserId());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getName());
             pstmt.setString(4, user.getEmail());
-
-            pstmt.executeUpdate();
-        } finally {
-            if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
-        }
+        });
     }
+
 
     public User findByUserId(String userId) throws SQLException {
         Connection con = null;
