@@ -25,7 +25,6 @@ public class JdbcTemplate {
     }
 
     public Object executeQuery(
-            String userId,
             String sql,
             PreparedStatementSetter pss,
             RowMapper rowMapper

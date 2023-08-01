@@ -21,7 +21,6 @@ public class UserDao {
 
         String sql = "SELECT userId, password, name, email FROM USERS WHERE userId = ?";
         return (User) jdbcTemplate.executeQuery(
-                userId,
                 sql,
                 pstmt -> pstmt.setString(1, userId),
                 rs -> new User(
