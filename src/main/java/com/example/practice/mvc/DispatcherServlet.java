@@ -14,21 +14,22 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
 @WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
 
-    private RequestMappingHandlerMapping rmhm;
+    private HandlerMapping hm;
     private List<HandlerAdapter> handlerAdapters;
     private List<ViewResolver> viewResolvers;
 
     @Override
     public void init() {
-        rmhm = new RequestMappingHandlerMapping();
+        RequestMappingHandlerMapping rmhm = new RequestMappingHandlerMapping();
         rmhm.init();
+
+        hm = rmhm;
 
         handlerAdapters = List.of(new SimpleControllerHandlerAdapter());
         viewResolvers = Collections.singletonList(new JspViewResolver());
@@ -40,7 +41,7 @@ public class DispatcherServlet extends HttpServlet {
         log.info("DispatcherServlet - service started.");
 
         try {
-            Controller handler = rmhm.findHandler(
+            Object handler = hm.findHandler(
                     new HandlerKey(RequestMethod.valueOf(req.getMethod()), req.getRequestURI())
             );
 
