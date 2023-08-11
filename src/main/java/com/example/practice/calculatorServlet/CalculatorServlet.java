@@ -2,7 +2,7 @@ package com.example.practice.calculatorServlet;
 
 import com.example.practice.calculator.Calculator;
 import com.example.practice.calculator.calculate.PositiveNumber;
-import jakarta.servlet.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
