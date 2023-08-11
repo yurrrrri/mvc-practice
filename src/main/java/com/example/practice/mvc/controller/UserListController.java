@@ -10,7 +10,7 @@ public class UserListController implements Controller {
     @Override
     public String handleRequest(HttpServletRequest req, HttpServletResponse resp) {
         req.setAttribute("users", List.of());
-        return "/user/list.jsp";
+        return "/user/list";
     }
 
 }
