@@ -1,16 +1,24 @@
 package com.example.practice;
 
-import com.example.practice.webCalculator.CustomWebApplicationServer;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.startup.Tomcat;
 
-import java.io.IOException;
+import java.io.File;
 
-@SpringBootApplication
+@Slf4j
 public class PracticeApplication {
 
-    public static void main(String[] args) throws IOException {
-        new CustomWebApplicationServer(8080).start();
+    public static void main(String[] args) throws LifecycleException {
+        String webappDirLocation = "webapps/";
+        Tomcat tomcat = new Tomcat();
+        tomcat.setPort(8080);
+
+        tomcat.addWebapp("/", new File(webappDirLocation).getAbsolutePath());
+        log.info("configuring app with basedir: {}", new File("./" + webappDirLocation).getAbsolutePath());
+
+        tomcat.start();
+        tomcat.getServer().await();
     }
 
 }
