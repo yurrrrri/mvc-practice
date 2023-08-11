@@ -5,7 +5,6 @@ import com.example.practice.mvc.controller.RequestMethod;
 import com.example.practice.mvc.view.JspViewResolver;
 import com.example.practice.mvc.view.View;
 import com.example.practice.mvc.view.ViewResolver;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
