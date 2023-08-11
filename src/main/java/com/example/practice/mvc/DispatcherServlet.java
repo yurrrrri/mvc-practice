@@ -1,6 +1,5 @@
 package com.example.practice.mvc;
 
-import com.example.practice.mvc.controller.Controller;
 import com.example.practice.mvc.controller.RequestMethod;
 import com.example.practice.mvc.view.JspViewResolver;
 import com.example.practice.mvc.view.ModelAndView;
@@ -20,7 +19,7 @@ import java.util.List;
 @WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
 
-    private HandlerMapping hm;
+    private List<HandlerMapping> handlerMappings;
     private List<HandlerAdapter> handlerAdapters;
     private List<ViewResolver> viewResolvers;
 
@@ -29,7 +28,9 @@ public class DispatcherServlet extends HttpServlet {
         RequestMappingHandlerMapping rmhm = new RequestMappingHandlerMapping();
         rmhm.init();
 
-        hm = rmhm;
+        AnnotationHandlerMapping ahm = new AnnotationHandlerMapping();
+
+        handlerMappings = List.of(rmhm, ahm);
 
         handlerAdapters = List.of(new SimpleControllerHandlerAdapter());
         viewResolvers = Collections.singletonList(new JspViewResolver());
@@ -40,10 +41,15 @@ public class DispatcherServlet extends HttpServlet {
 
         log.info("DispatcherServlet - service started.");
 
+        String requestURI = req.getRequestURI();
+        RequestMethod requestMethod = RequestMethod.valueOf(req.getMethod());
+
         try {
-            Object handler = hm.findHandler(
-                    new HandlerKey(RequestMethod.valueOf(req.getMethod()), req.getRequestURI())
-            );
+            Object handler = handlerMappings.stream()
+                    .filter(hm -> hm.findHandler(new HandlerKey(requestMethod, requestURI)) != null)
+                    .map(hm -> hm.findHandler(new HandlerKey(requestMethod, requestURI)))
+                    .findFirst()
+                    .orElseThrow(() -> new ServletException("No handler for [" + requestMethod + ", " + requestURI + "]"));
 
             HandlerAdapter handlerAdapter = handlerAdapters.stream()
                     .filter(ha -> ha.supports(handler))
